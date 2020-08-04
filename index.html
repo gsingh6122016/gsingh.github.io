@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>Address Directory</title> 
+    <link href="./index.css" rel="stylesheet"></head>
+
+</head> 
+  
+<body> 
+      
+  
+    <header> 
+       <h1>ADDRESS DIRECTORY</h1>
+    </header> 
+    
+      <div id="container">
+          <div id = "form-container">
+            
+            <form id="form" action="#" onsubmit="storeAddress();return false">
+                <h2>ADD ADDRESS</h2>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter Name" required><br>
+    
+                <label for="streetname">Street Name:</label>
+                <input type="text" id="streetname" name="streetname" placeholder="Enter Street Name" required><br>
+    
+                <label for="houseno">House Number:</label>
+                <input type="text" id="houseno" name="houseno" placeholder="Enter House Number" required><br>
+    
+                <label for="cars">Building Type:</label>
+                <select id="buildingtype" name="buildingtype" onchange="deactivateHandler()"> 
+                <option value="apartment">Apartment</option>
+                <option value="standalone">Stand Alone House</option>
+                
+                </select>
+                <br><br>
+                <label for="aprtname">Appartment Name:</label>
+                <input type="text" id="aprtname" name="aprtname" placeholder="Enter Apartment Name" required><br>
+    
+                <label for="cityname">city Name:</label>
+                <input type="text" id="cityname" name="cityname" placeholder="Enter City Name" required><br>
+    
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" placeholder="Enter State" required><br>
+    
+                <label for="aprtname">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" placeholder="Enter Pincode" required><br>
+                
+                <input type="submit" ></input>
+              </form>
+    
+              <div id = "query-container">
+                  <form id="form2" action="#" onsubmit="fetchAddById();return false">
+                    <h2>Filter Results</h2>
+
+                    <label for="name">Search by ID:</label>
+                    <input type="text" id="searchid" name="searchid" placeholder="Enter ID" required><br>
+                    <input type="submit" ></input>
+                    <br>
+                </form>
+                    <hr>
+                    <br>
+                    <form id="form3" action="#" onsubmit="fetchAddByApp();return false">
+                    <label for="name">Search by Apartment:</label>
+                    <input type="text" id="searchapartment" name="searchapartment" placeholder="Enter Apartment Name" required><br>
+                    <input type="submit" ></input>
+                    <br>
+                </form>
+                    
+    
+                    <hr>
+                    <br>
+                    <form id="form4" action="#" onsubmit="showAll();return false">
+                    <label for="name">Search by Pincode:</label>
+                    <input type="text" id="searchpincode" name="searchpincode" placeholder="Enter Pincode" required><br>
+                    <input type="submit" ></input>
+                    <br>
+
+                    <button type="button" onclick="showAll()" >Show All Address Data</button>
+                  </form>
+               
+            </div>
+          </div>
+
+          
+       
+          <div id = "section-container">
+            <h1>DATA RESULTS :</h1>
+            <section>
+                
+                <h2>No Data Found</h2>
+            </section>
+          </div>
+          
+           
+          
+
+      </div>
+    
+    
+      
+  
+      
+    <script type="text/javascript" src="./index.js"></script>
+</body> 
+</html> 

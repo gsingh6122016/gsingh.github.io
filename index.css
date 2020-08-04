@@ -1,0 +1,133 @@
+#form-container {
+    
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+@media(max-width: 500px) {
+  
+    #query-container {
+        margin-top: 20px;
+    }
+    
+
+}
+
+#data-container{
+    width:100%;
+    padding: 20px;
+    box-sizing: border-box;
+    
+}
+
+#query-container {
+    width: 350px;
+    height: 650px;
+    box-shadow: 1px 2px 3px gray;
+    border: solid 1px #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+
+
+
+section{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+h1{
+    text-align: center;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+h2{
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+input:disabled{
+    background-color: rgb(218, 136, 136);
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input:focus {
+    outline: none;
+    background-color: rgb(219, 241, 240);
+    border: solid 1px black;
+}
+
+#form {
+    width: 700px;
+    margin: 0px 20px;
+    background-color: #f2f2f2;
+    padding: 10px 30px;
+    box-shadow: 1px 2px 3px gray;
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+    
+}
+
+button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+article {
+    width: 200px; 
+    margin: 20px 20px;
+    padding: 10px 30px;
+    box-shadow: 1px 2px 3px gray;
+    border: solid 1px #ccc;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
