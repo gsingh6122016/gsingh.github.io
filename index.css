@@ -95,6 +95,7 @@ label {
 input:focus {
     outline: none;
     background-color: rgb(219, 241, 240);
+    color: black;
     border: solid 1px black;
 }
 
