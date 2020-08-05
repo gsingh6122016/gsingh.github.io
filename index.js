@@ -1,6 +1,24 @@
+let objArr = [];
+
+
+
 class Address {
-    constructor(name, strName, hosNo, buildType, aprtName,  cityName, state, pincode) {
-        this.id = Date.now();
+    constructor() {
+        
+        this.id = "";
+        this.name = "";
+        this.strName="";
+        this.hosNo = "";
+        this.buildType = "";
+        this.aprtName = "";
+        this.cityName = "";
+        this.state = "";
+        this.pincode = ""; 
+    }
+
+    setAddressValue(name, strName, hosNo, buildType, aprtName,  cityName, state, pincode) {
+
+        this.id = Date.now().toString() + Math.floor((Math.random() * 100) + 1);
         this.name = name;
         this.strName=strName;
         this.hosNo = hosNo;
@@ -9,14 +27,12 @@ class Address {
         this.cityName = cityName;
         this.state = state;
         this.pincode = pincode; 
+        
     }
 
-}
+    
 
-let objArr = [];
-
-
-function displayFIlterData(objectDataArr) {
+ displayFIlterData(objectDataArr) {
 
     
 
@@ -75,7 +91,7 @@ function displayFIlterData(objectDataArr) {
 }
 
 
-function fetchAddById  ()  {
+ fetchAddById  ()  {
     var id = document.getElementById("form2");
     var objectDataArr = [];
 
@@ -83,15 +99,15 @@ function fetchAddById  ()  {
         
        if (objArr[i].id == id.elements["searchid"].value ) {
            objectDataArr.push(objArr[i]);
-          displayFIlterData(objectDataArr);
+          this.displayFIlterData(objectDataArr);
        }
 
    }   
-   displayFIlterData(objectDataArr);
+   this.displayFIlterData(objectDataArr);
 }
 
 
-function fetchAddByApp ()  {
+ fetchAddByApp ()  {
     var id = document.getElementById("form3");
     let newArr = [];
     for(let i=0; i<objArr.length; i++) {
@@ -100,11 +116,12 @@ function fetchAddByApp ()  {
        }
 
    }   
-   displayFIlterData(newArr);
+   
+   this.displayFIlterData(newArr);
 }
 
 
-function fetchAddByPin () {
+ fetchAddByPin () {
     var id = document.getElementById("form4");
     let newArr = [];
     for(let i=0; i<objArr.length; i++) {
@@ -113,11 +130,11 @@ function fetchAddByPin () {
        }
 
    }   
-   displayFIlterData(newArr);
+   this.displayFIlterData(newArr);
 }
 
 
-function displayData(objectData, value) {
+ displayData(value) {
 
     
 
@@ -142,15 +159,15 @@ function displayData(objectData, value) {
       const state = document.createElement('p');
       const pincode = document.createElement('p');
     
-      id.textContent = 'ID:' + objectData.id;
-      Name.textContent = 'Name:' + objectData.name;
-      streetname.textContent = 'Street Name:' + objectData.strName;
-      houseno.textContent = 'House Number:' + objectData.hosNo;
-      buildingtype.textContent = 'Building Type:' + objectData.buildType;
+      id.textContent = 'ID:' + this.id;
+      Name.textContent = 'Name:' + this.name;
+      streetname.textContent = 'Street Name:' + this.strName;
+      houseno.textContent = 'House Number:' + this.hosNo;
+      buildingtype.textContent = 'Building Type:' + this.buildType;
       
-      cityname.textContent = 'City Name:' + objectData.cityName;
-      state.textContent = 'State:' + objectData.state
-      pincode.textContent = 'pincode' + objectData.pincode;
+      cityname.textContent = 'City Name:' + this.cityName;
+      state.textContent = 'State:' + this.state
+      pincode.textContent = 'pincode' + this.pincode;
 
       myArticle.appendChild(id);
       myArticle.appendChild(Name);
@@ -175,15 +192,15 @@ function displayData(objectData, value) {
       const state = document.createElement('p');
       const pincode = document.createElement('p');
     
-      id.textContent = 'ID: ' + objectData.id;
-      Name.textContent = 'Name: ' + objectData.name;
-      streetname.textContent = 'Street Name: ' + objectData.strName;
-      houseno.textContent = 'House Number: ' + objectData.hosNo;
-      buildingtype.textContent = 'Building Type: ' + objectData.buildType;
-      aprtname.textContent = 'Apartment Name: ' + objectData.aprtName;
-      cityname.textContent = 'City Name: ' + objectData.cityName;
-      state.textContent = 'State: ' + objectData.state
-      pincode.textContent = 'pincode: ' + objectData.pincode;
+      id.textContent = 'ID: ' + this.id;
+      Name.textContent = 'Name: ' + this.name;
+      streetname.textContent = 'Street Name: ' + this.strName;
+      houseno.textContent = 'House Number: ' + this.hosNo;
+      buildingtype.textContent = 'Building Type: ' + this.buildType;
+      aprtname.textContent = 'Apartment Name: ' + this.aprtName;
+      cityname.textContent = 'City Name: ' + this.cityName;
+      state.textContent = 'State: ' + this.state
+      pincode.textContent = 'pincode: ' + this.pincode;
 
       myArticle.appendChild(id);
       myArticle.appendChild(Name);
@@ -202,18 +219,30 @@ function displayData(objectData, value) {
   
 }
 
+deactivateHandler() {
+ 
+    if (event.target.value === "standalone") {     
+     document.getElementsByTagName("INPUT")[3].setAttribute("disabled", "true");
+    }
+ 
+    else {
+          document.getElementsByTagName("INPUT")[3].removeAttribute("disabled");
+    }
+     
+ }
+ 
+ showAll() {
+     this.displayFIlterData(objArr);
+ }
+ 
 
 
-
-function storeAddress () {
+ storeAddress () {
 
     var oform = document.getElementById("form");
+    let obj = new Address();
+     obj.setAddressValue(oform.elements["name"].value,
 
-    
-
-  
-
-    let obj = new Address(oform.elements["name"].value,
      oform.elements["streetname"].value,
      oform.elements["houseno"].value,
      oform.elements["buildingtype"].value,
@@ -224,28 +253,22 @@ function storeAddress () {
 
     const val = oform.elements["aprtname"].value;
      
+
+
     objArr.push(obj);
 
     oform.reset();
 
-    displayData(obj, val);
+    obj.displayData(val);
 
 }
 
-function deactivateHandler() {
- 
-   if (event.target.value === "standalone") {     
-    document.getElementsByTagName("INPUT")[3].setAttribute("disabled", "true");
-   }
 
-   else {
-         document.getElementsByTagName("INPUT")[3].removeAttribute("disabled");
-   }
-    
+
 }
 
-function showAll() {
-    displayFIlterData(objArr);
-}
 
+
+
+let Obj = new Address();
 
