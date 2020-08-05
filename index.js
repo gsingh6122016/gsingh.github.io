@@ -1,7 +1,5 @@
 let objArr = [];
 
-
-
 class Address {
     constructor() {
         
@@ -16,9 +14,9 @@ class Address {
         this.pincode = ""; 
     }
 
-    setAddressValue(name, strName, hosNo, buildType, aprtName,  cityName, state, pincode) {
+    setAddressValue(id ,name, strName, hosNo, buildType, aprtName,  cityName, state, pincode) {
 
-        this.id = Date.now().toString() + Math.floor((Math.random() * 100) + 1);
+        this.id = id;
         this.name = name;
         this.strName=strName;
         this.hosNo = hosNo;
@@ -30,11 +28,7 @@ class Address {
         
     }
 
-    
-
  displayFIlterData(objectDataArr) {
-
-    
 
     const mySection = document.querySelector('section');
 
@@ -42,7 +36,9 @@ class Address {
       mySection.innerHTML = "";
 
       if(objectDataArr.length === 0){
-        mySection.innerHTML = "No Data Found";
+        const h2 = document.createElement('h2');
+        h2.textContent = "No Data Found ,try to add something"
+        mySection.appendChild(h2);
       }
 
       else{
@@ -134,91 +130,6 @@ class Address {
 }
 
 
- displayData(value) {
-
-    
-
-      const mySection = document.querySelector('section');
-
-      if(objArr.length < 2) {
-        mySection.innerHTML = "";
-      }
-      
-      const myArticle = document.createElement('article');
-
-      if(value === "")
-      {
-        
-      const id = document.createElement('p');
-      const Name = document.createElement('p');
-      const streetname = document.createElement('p');
-      const houseno = document.createElement('p');
-      const buildingtype = document.createElement('p');
-      
-      const cityname = document.createElement('p');
-      const state = document.createElement('p');
-      const pincode = document.createElement('p');
-    
-      id.textContent = 'ID:' + this.id;
-      Name.textContent = 'Name:' + this.name;
-      streetname.textContent = 'Street Name:' + this.strName;
-      houseno.textContent = 'House Number:' + this.hosNo;
-      buildingtype.textContent = 'Building Type:' + this.buildType;
-      
-      cityname.textContent = 'City Name:' + this.cityName;
-      state.textContent = 'State:' + this.state
-      pincode.textContent = 'pincode' + this.pincode;
-
-      myArticle.appendChild(id);
-      myArticle.appendChild(Name);
-      myArticle.appendChild(streetname);
-      myArticle.appendChild(houseno);
-      myArticle.appendChild(buildingtype);
-    
-      myArticle.appendChild(cityname);
-      myArticle.appendChild(state);
-      myArticle.appendChild(pincode);
-      }
-
-      else {
-          
-      const id = document.createElement('p');
-      const Name = document.createElement('p');
-      const streetname = document.createElement('p');
-      const houseno = document.createElement('p');
-      const buildingtype = document.createElement('p');
-      const aprtname = document.createElement('p');
-      const cityname = document.createElement('p');
-      const state = document.createElement('p');
-      const pincode = document.createElement('p');
-    
-      id.textContent = 'ID: ' + this.id;
-      Name.textContent = 'Name: ' + this.name;
-      streetname.textContent = 'Street Name: ' + this.strName;
-      houseno.textContent = 'House Number: ' + this.hosNo;
-      buildingtype.textContent = 'Building Type: ' + this.buildType;
-      aprtname.textContent = 'Apartment Name: ' + this.aprtName;
-      cityname.textContent = 'City Name: ' + this.cityName;
-      state.textContent = 'State: ' + this.state
-      pincode.textContent = 'pincode: ' + this.pincode;
-
-      myArticle.appendChild(id);
-      myArticle.appendChild(Name);
-      myArticle.appendChild(streetname);
-      myArticle.appendChild(houseno);
-      myArticle.appendChild(buildingtype);
-      myArticle.appendChild(aprtname);
-      myArticle.appendChild(cityname);
-      myArticle.appendChild(state);
-      myArticle.appendChild(pincode);
-      }
-
-      
-
-      mySection.appendChild(myArticle);
-  
-}
-
 deactivateHandler() {
  
     if (event.target.value === "standalone") {     
@@ -240,26 +151,50 @@ deactivateHandler() {
  storeAddress () {
 
     var oform = document.getElementById("form");
-    let obj = new Address();
-     obj.setAddressValue(oform.elements["name"].value,
+  
 
-     oform.elements["streetname"].value,
-     oform.elements["houseno"].value,
-     oform.elements["buildingtype"].value,
-     oform.elements["aprtname"].value, 
-     oform.elements["cityname"].value, 
-     oform.elements["state"].value,
-     oform.elements["pincode"].value);
 
-    const val = oform.elements["aprtname"].value;
+   let i=localStorage.length/9;
+   
      
+                
+        localStorage.setItem("ID"+i,Date.now().toString() + Math.floor((Math.random() * 100) + 1) );
+        localStorage.setItem("Name"+i,oform.elements["name"].value );
+        localStorage.setItem("Street Name"+i,oform.elements["streetname"].value );
+        localStorage.setItem("House Number"+i,oform.elements["houseno"].value );
+        localStorage.setItem("Building Type"+i,oform.elements["buildingtype"].value );
+        localStorage.setItem("Apartment Name"+i,oform.elements["aprtname"].value );
+        localStorage.setItem("City Name"+i,oform.elements["cityname"].value );
+        localStorage.setItem("State"+i,oform.elements["state"].value );
+        localStorage.setItem("pincode"+i,oform.elements["pincode"].value );
+       
+        console.log(localStorage);
+
+
+      let obj = new Address();
+     obj.setAddressValue( 
+         localStorage.getItem("ID"+i),
+        localStorage.getItem("Name"+i),
+     localStorage.getItem("Street Name"+i),
+     localStorage.getItem("House Number"+i),
+     localStorage.getItem("Building Type"+i),
+     localStorage.getItem("Apartment Name"+i), 
+     localStorage.getItem("City Name"+i), 
+     localStorage.getItem("State"+i),
+     localStorage.getItem("pincode"+i)
+
+     );
+      
 
 
     objArr.push(obj);
 
     oform.reset();
 
-    obj.displayData(val);
+
+   
+
+    obj.displayFIlterData(objArr);
 
 }
 
@@ -271,4 +206,34 @@ deactivateHandler() {
 
 
 let Obj = new Address();
+
+
+function callIt()
+{
+    for(let i=0; i<localStorage.length/9; i++ ){
+        
+      let obj = new Address();
+      obj.setAddressValue( 
+          localStorage.getItem("ID"+i),
+         localStorage.getItem("Name"+i),
+      localStorage.getItem("Street Name"+i),
+      localStorage.getItem("House Number"+i),
+      localStorage.getItem("Building Type"+i),
+      localStorage.getItem("Apartment Name"+i), 
+      localStorage.getItem("City Name"+i), 
+      localStorage.getItem("State"+i),
+      localStorage.getItem("pincode"+i)
+ 
+      );
+       
+ 
+ 
+     objArr.push(obj);
+ 
+    }
+    let obj2 = new Address();
+    obj2.displayFIlterData(objArr);
+  
+}
+window.onload= callIt;
 
