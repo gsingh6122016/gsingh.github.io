@@ -169,21 +169,21 @@ deactivateHandler() {
         localStorage.setItem("pincode"+i,oform.elements["pincode"].value );
        
         console.log(localStorage);
+        location.reload();
 
+    //   let obj = new Address();
+    //  obj.setAddressValue( 
+    //      localStorage.getItem("ID"+i),
+    //     localStorage.getItem("Name"+i),
+    //  localStorage.getItem("Street Name"+i),
+    //  localStorage.getItem("House Number"+i),
+    //  localStorage.getItem("Building Type"+i),
+    //  localStorage.getItem("Apartment Name"+i), 
+    //  localStorage.getItem("City Name"+i), 
+    //  localStorage.getItem("State"+i),
+    //  localStorage.getItem("pincode"+i)
 
-      let obj = new Address();
-     obj.setAddressValue( 
-         localStorage.getItem("ID"+i),
-        localStorage.getItem("Name"+i),
-     localStorage.getItem("Street Name"+i),
-     localStorage.getItem("House Number"+i),
-     localStorage.getItem("Building Type"+i),
-     localStorage.getItem("Apartment Name"+i), 
-     localStorage.getItem("City Name"+i), 
-     localStorage.getItem("State"+i),
-     localStorage.getItem("pincode"+i)
-
-     );
+    //  );
       
 
 
@@ -214,8 +214,8 @@ function callIt()
         
       let obj = new Address();
       obj.setAddressValue( 
-          localStorage.getItem("ID"+i),
-         localStorage.getItem("Name"+i),
+      localStorage.getItem("ID"+i),
+      localStorage.getItem("Name"+i),
       localStorage.getItem("Street Name"+i),
       localStorage.getItem("House Number"+i),
       localStorage.getItem("Building Type"+i),
