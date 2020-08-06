@@ -17,67 +17,67 @@
       <div id="container">
           <div id = "form-container">
             
-            <form id="form" action="#" onsubmit="Obj.storeAddress();return false">
+            <form id="form" action="#" onsubmit="return false">
                 <h2>ADD ADDRESS</h2>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter Name" required><br>
+                <input type="text" id="name" name="name" placeholder="Enter Name" required /><br>
     
                 <label for="streetname">Street Name:</label>
-                <input type="text" id="streetname" name="streetname" placeholder="Enter Street Name" required><br>
+                <input type="text" id="streetname" name="streetname" placeholder="Enter Street Name" required /><br>
     
                 <label for="houseno">House Number:</label>
-                <input type="text" id="houseno" name="houseno" placeholder="Enter House Number" required><br>
+                <input type="text" id="houseno" name="houseno" placeholder="Enter House Number" required /><br>
     
                 <label for="cars">Building Type:</label>
-                <select id="buildingtype" name="buildingtype" onchange="Obj.deactivateHandler()"> 
+                <select id="buildingtype" name="buildingtype" > 
                 <option value="apartment">Apartment</option>
                 <option value="standalone">Stand Alone House</option>
                 
                 </select>
                 <br><br>
                 <label for="aprtname">Appartment Name:</label>
-                <input type="text" id="aprtname" name="aprtname" placeholder="Enter Apartment Name" required><br>
+                <input type="text" id="aprtname" name="aprtname" placeholder="Enter Apartment Name" required /><br>
     
                 <label for="cityname">city Name:</label>
-                <input type="text" id="cityname" name="cityname" placeholder="Enter City Name" required><br>
+                <input type="text" id="cityname" name="cityname" placeholder="Enter City Name" required /><br>
     
                 <label for="state">State:</label>
-                <input type="text" id="state" name="state" placeholder="Enter State" required><br>
+                <input type="text" id="state" name="state" placeholder="Enter State" required /><br>
     
                 <label for="aprtname">Pincode:</label>
-                <input type="text" id="pincode" name="pincode" placeholder="Enter Pincode" required><br>
+                <input type="text" id="pincode" name="pincode" placeholder="Enter Pincode" required /><br>
                 
-                <input type="submit" ></input>
+                <input type="submit" id="form-submit"></input>
               </form>
     
               <div id = "query-container">
-                  <form id="form2" action="#" onsubmit="Obj.fetchAddById();return false">
+                  <form id="form2" action="#" onsubmit="return false">
                     <h2>Filter Results</h2>
 
                     <label for="name">Search by ID:</label>
                     <input type="text" id="searchid" name="searchid" placeholder="Enter ID" required><br>
-                    <input type="submit" ></input>
+                    <input type="submit" id="searchid-submit"></input>
                     <br>
                 </form>
                     <hr>
                     <br>
-                    <form id="form3" action="#" onsubmit="Obj.fetchAddByApp();return false">
+                    <form id="form3" action="#" onsubmit="return false">
                     <label for="name">Search by Apartment:</label>
                     <input type="text" id="searchapartment" name="searchapartment" placeholder="Enter Apartment Name" required><br>
-                    <input type="submit" ></input>
+                    <input type="submit" id="searchapartment-submit"></input>
                     <br>
                 </form>
                     
     
                     <hr>
                     <br>
-                    <form id="form4" action="#" onsubmit="Obj.fetchAddByPin();return false">
+                    <form id="form4" action="#" onsubmit="return false">
                     <label for="name">Search by Pincode:</label>
                     <input type="text" id="searchpincode" name="searchpincode" placeholder="Enter Pincode" required><br>
-                    <input type="submit" ></input>
+                    <input type="submit" id="searchpincode-submit" ></input>
                     <br>
 
-                    <button type="button" onclick="Obj.showAll()" >Show All Address Data</button>
+                    <button type="button" id="show-all" >Show All Address Data</button>
                   </form>
                
             </div>
