@@ -42,10 +42,7 @@ class Directory {
 
  fetchAddById = () => {
 
-    if(!this.viewObj.validateForm(this.viewObj.form2.elements[0].value)){
-        return;
-    }
-
+  
     var objectDataArr = [];
   
 
@@ -53,20 +50,17 @@ class Directory {
         
        if (objArr[i].id == this.viewObj.searchidInput.value ) {
            objectDataArr.push(objArr[i]);
-          this.viewObj.displayFIlterData(objectDataArr);
+          return objectDataArr;
        }
 
    }   
-   this.viewObj.displayFIlterData(objectDataArr);
+   return objectDataArr;
 }
 
 
 
  fetchAddByApp = () => {
-    if(!this.viewObj.validateForm(this.viewObj.form3.elements[0].value)){
-        return;
-    }
-
+  
     let newArr = [];
 
 
@@ -77,16 +71,12 @@ class Directory {
        }
 
    }     
-   this.viewObj.displayFIlterData(newArr);
+   return newArr;
 }
 
 
 
  fetchAddByPin = () => {
-
-    if(!this.viewObj.validateForm(this.viewObj.form4.elements[0].value)){
-        return;
-    }
 
     let newArr = [];
     for(let i=0; i<objArr.length; i++) {
@@ -95,7 +85,7 @@ class Directory {
        }
 
    }   
-   this.viewObj.displayFIlterData(newArr);
+  return newArr;
 }
 
 
@@ -112,17 +102,8 @@ deactivateHandler = () => {
  }
  
 
- showAll = () => {
-     this.viewObj.displayFIlterData(objArr);
- }
- 
-
 
  storeAddress = () => {
-
-    
-      
-
    let i= Math.floor(localStorage.length/9 ) ;
         localStorage.setItem("ID"+i,Date.now().toString() + Math.floor((Math.random() * 100) + 1) );
         localStorage.setItem("Name"+i, this.viewObj.nameInput.value);
@@ -133,13 +114,17 @@ deactivateHandler = () => {
         localStorage.setItem("City Name"+i,this.viewObj.citynameInput.value );
         localStorage.setItem("State"+i,this.viewObj.stateInput.value );
         localStorage.setItem("pincode"+i,this.viewObj.pincodeInput.value );
-      
-        location.reload(); 
     
-
                 }
 
 }
+
+
+
+
+
+
+
 
 class View {
     constructor() {
@@ -174,6 +159,7 @@ class View {
         this.form4 = document.getElementById("form4");
     }
 
+
   displayFIlterData(objectDataArr) {
     const mySection = document.querySelector('section');
       mySection.innerHTML = "";
@@ -187,9 +173,7 @@ class View {
       else{
         for(let i=0; i<objectDataArr.length; i++) {
             const myArticle = document.createElement('article');
-    
-            
-            
+         
             const id = document.createElement('p');
             const Name = document.createElement('p');
             const streetname = document.createElement('p');
@@ -224,6 +208,12 @@ class View {
       }
 }
 
+
+showAll = () => {
+    this.displayFIlterData(objArr);
+}
+
+
 validFormCheck (x) {
       if (x == "") {
         alert("All fields must be filled out");
@@ -235,22 +225,25 @@ validFormCheck (x) {
     }
 }
 
-validateForm() {
-    for (let j=0;j<this.form.elements.length-1;j++) {
+validateForm(form) {
+    for (let j=0;j<form.elements.length-1;j++) {
 
           
-        if(this.form.elements[j].disabled)
+        if(form.elements[j].disabled)
         {
             continue;
         }
                 
-        if(!this.validFormCheck(this.form.elements[j].value)){
-            return false;
-        }       
+        if(form.elements[j].required){
+            if(!this.validFormCheck(form.elements[j].value)){
+                return false;
+            }  
+        }     
     }
     return true;
 
 }
+
 
 }
 
@@ -261,16 +254,35 @@ let Dobj = new Directory(viewObj);
 
 
 viewObj.formButton.addEventListener('click', () => {
-    if(viewObj.validateForm()){
-        Dobj.storeAddress()
+    if(viewObj.validateForm(viewObj.form)){
+        Dobj.storeAddress();
+        location.reload(); 
+    }
+});
+
+viewObj.searchidSubmit.addEventListener('click', () => {
+    if(viewObj.validateForm(viewObj.form2)){
+        viewObj.displayFIlterData(Dobj.fetchAddById());
+        
+    }
+});
+
+viewObj.searchapartmentSubmit.addEventListener('click', () => {
+    if(viewObj.validateForm(viewObj.form3)){
+        viewObj.displayFIlterData(Dobj.fetchAddByApp());
+    
+    }
+});
+
+viewObj.searchpincodeSubmit.addEventListener('click', () => {
+    if(viewObj.validateForm(viewObj.form4)){
+        viewObj.displayFIlterData( Dobj.fetchAddByPin());
+       
     }
 });
 
 
-viewObj.searchidSubmit.addEventListener('click', Dobj.fetchAddById);
-viewObj.searchapartmentSubmit.addEventListener('click', Dobj.fetchAddByApp);
-viewObj.searchpincodeSubmit.addEventListener('click', Dobj.fetchAddByPin);
-viewObj.showAllSubmit.addEventListener('click', Dobj.showAll);
+viewObj.showAllSubmit.addEventListener('click', viewObj.showAll);
 viewObj.deactivateSelect.addEventListener('change', Dobj.deactivateHandler);
 
 
