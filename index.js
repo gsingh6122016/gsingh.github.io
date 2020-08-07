@@ -38,7 +38,143 @@ class Directory {
         this.viewObj=viewObj;
     }
 
-    displayFIlterData(objectDataArr) {
+  
+
+ fetchAddById = () => {
+
+    if(!this.viewObj.validateForm(this.viewObj.form2.elements[0].value)){
+        return;
+    }
+
+    var objectDataArr = [];
+  
+
+    for(let i=0; i<objArr.length; i++) {
+        
+       if (objArr[i].id == this.viewObj.searchidInput.value ) {
+           objectDataArr.push(objArr[i]);
+          this.viewObj.displayFIlterData(objectDataArr);
+       }
+
+   }   
+   this.viewObj.displayFIlterData(objectDataArr);
+}
+
+
+
+ fetchAddByApp = () => {
+    if(!this.viewObj.validateForm(this.viewObj.form3.elements[0].value)){
+        return;
+    }
+
+    let newArr = [];
+
+
+    for(let i=0; i<objArr.length; i++) {
+       if (objArr[i].aprtName === this.viewObj.searchapartmentInput.value
+        && this.viewObj.searchapartmentInput.value != "") {
+           newArr.push(objArr[i]);
+       }
+
+   }     
+   this.viewObj.displayFIlterData(newArr);
+}
+
+
+
+ fetchAddByPin = () => {
+
+    if(!this.viewObj.validateForm(this.viewObj.form4.elements[0].value)){
+        return;
+    }
+
+    let newArr = [];
+    for(let i=0; i<objArr.length; i++) {
+       if (objArr[i].pincode === this.viewObj.searchpincodeInput.value) {
+           newArr.push(objArr[i]);
+       }
+
+   }   
+   this.viewObj.displayFIlterData(newArr);
+}
+
+
+
+deactivateHandler = () => {
+
+    if (event.target.value === "standalone") {     
+     this.viewObj.deactivateInput.setAttribute("disabled", "true");
+    }
+    else {
+          this.viewObj.deactivateInput.removeAttribute("disabled");
+    }
+     
+ }
+ 
+
+ showAll = () => {
+     this.viewObj.displayFIlterData(objArr);
+ }
+ 
+
+
+ storeAddress = () => {
+
+    
+      
+
+   let i= Math.floor(localStorage.length/9 ) ;
+        localStorage.setItem("ID"+i,Date.now().toString() + Math.floor((Math.random() * 100) + 1) );
+        localStorage.setItem("Name"+i, this.viewObj.nameInput.value);
+        localStorage.setItem("Street Name"+i,this.viewObj.streetnameInput.value );
+        localStorage.setItem("House Number"+i,this.viewObj.housenoInput.value );
+        localStorage.setItem("Building Type"+i,this.viewObj.buildingtypeInput.value );
+        localStorage.setItem("Apartment Name"+i,this.viewObj.aprtnameInput.value );
+        localStorage.setItem("City Name"+i,this.viewObj.citynameInput.value );
+        localStorage.setItem("State"+i,this.viewObj.stateInput.value );
+        localStorage.setItem("pincode"+i,this.viewObj.pincodeInput.value );
+      
+        location.reload(); 
+    
+
+                }
+
+}
+
+class View {
+    constructor() {
+        this.nameInput = document.querySelector('#name');
+        this.housenoInput = document.querySelector('#houseno');
+        this.streetnameInput = document.querySelector('#streetname');
+        this.buildingtypeInput = document.querySelector('#buildingtype');
+        this.aprtnameInput = document.querySelector('#aprtname');
+        this.citynameInput = document.querySelector('#cityname');
+        this.stateInput = document.querySelector('#state');
+        this.pincodeInput = document.querySelector('#pincode');
+        
+        this.formButton = document.querySelector('#form-submit');
+        
+        this.searchidInput = document.querySelector('#searchid');
+        this.searchidSubmit = document.querySelector('#searchid-submit');
+   
+        this.searchapartmentInput = document.querySelector('#searchapartment');
+        this.searchapartmentSubmit = document.querySelector('#searchapartment-submit');
+        
+        this.searchpincodeInput = document.querySelector('#searchpincode');
+        this.searchpincodeSubmit = document.querySelector('#searchpincode-submit');
+        
+        this.showAllSubmit = document.querySelector('#show-all');
+
+        this.deactivateSelect = document.querySelector('#buildingtype');
+        this.deactivateInput = document.getElementsByTagName("INPUT")[3];
+
+        this.form = document.getElementById("form");
+        this.form2 = document.getElementById("form2");
+        this.form3 = document.getElementById("form3");
+        this.form4 = document.getElementById("form4");
+    }
+
+  displayFIlterData(objectDataArr) {
     const mySection = document.querySelector('section');
       mySection.innerHTML = "";
 
@@ -88,114 +224,8 @@ class Directory {
       }
 }
 
-
- fetchAddById = () => {
-
-    if(!this.validateForm(this.viewObj.form2.elements[0].value)){
-        return;
-    }
-
-    var objectDataArr = [];
-  
-
-    for(let i=0; i<objArr.length; i++) {
-        
-       if (objArr[i].id == this.viewObj.searchidInput.value ) {
-           objectDataArr.push(objArr[i]);
-          this.displayFIlterData(objectDataArr);
-       }
-
-   }   
-   this.displayFIlterData(objectDataArr);
-}
-
-
-
- fetchAddByApp = () => {
-    if(!this.validateForm(this.viewObj.form3.elements[0].value)){
-        return;
-    }
-
-    let newArr = [];
-
-
-    for(let i=0; i<objArr.length; i++) {
-       if (objArr[i].aprtName === this.viewObj.searchapartmentInput.value
-        && this.viewObj.searchapartmentInput.value != "") {
-           newArr.push(objArr[i]);
-       }
-
-   }     
-   this.displayFIlterData(newArr);
-}
-
-
-
- fetchAddByPin = () => {
-
-    if(!this.validateForm(this.viewObj.form4.elements[0].value)){
-        return;
-    }
-
-    let newArr = [];
-    for(let i=0; i<objArr.length; i++) {
-       if (objArr[i].pincode === this.viewObj.searchpincodeInput.value) {
-           newArr.push(objArr[i]);
-       }
-
-   }   
-   this.displayFIlterData(newArr);
-}
-
-
-
-deactivateHandler = () => {
-
-    if (event.target.value === "standalone") {     
-     this.viewObj.deactivateInput.setAttribute("disabled", "true");
-    }
-    else {
-          this.viewObj.deactivateInput.removeAttribute("disabled");
-    }
-     
- }
- 
-
- showAll = () => {
-     this.displayFIlterData(objArr);
- }
- 
-
-
- storeAddress = () => {
-        
-        for (let j=0;j<this.viewObj.form.elements.length;j++) {
-
-            if(!this.validateForm(this.viewObj.form.elements[j].value)){
-                return;
-            }           
-        }
-
-   let i= Math.floor(localStorage.length/9 ) ;
-        localStorage.setItem("ID"+i,Date.now().toString() + Math.floor((Math.random() * 100) + 1) );
-        localStorage.setItem("Name"+i, this.viewObj.nameInput.value);
-        localStorage.setItem("Street Name"+i,this.viewObj.streetnameInput.value );
-        localStorage.setItem("House Number"+i,this.viewObj.housenoInput.value );
-        localStorage.setItem("Building Type"+i,this.viewObj.buildingtypeInput.value );
-        localStorage.setItem("Apartment Name"+i,this.viewObj.aprtnameInput.value );
-        localStorage.setItem("City Name"+i,this.viewObj.citynameInput.value );
-        localStorage.setItem("State"+i,this.viewObj.stateInput.value );
-        localStorage.setItem("pincode"+i,this.viewObj.pincodeInput.value );
-      
-        location.reload(); 
-    
-
-                }
-
-
-validateForm(x) {
-
-    if (x == "") {
+validFormCheck (x) {
+      if (x == "") {
         alert("All fields must be filled out");
         return false;
     }
@@ -203,44 +233,25 @@ validateForm(x) {
     {
         return true;
     }
-
 }
 
+validateForm() {
+    for (let j=0;j<this.form.elements.length-1;j++) {
 
-}
-
-class View {
-    constructor() {
-        this.nameInput = document.querySelector('#name');
-        this.housenoInput = document.querySelector('#houseno');
-        this.streetnameInput = document.querySelector('#streetname');
-        this.buildingtypeInput = document.querySelector('#buildingtype');
-        this.aprtnameInput = document.querySelector('#aprtname');
-        this.citynameInput = document.querySelector('#cityname');
-        this.stateInput = document.querySelector('#state');
-        this.pincodeInput = document.querySelector('#pincode');
-        
-        this.formButton = document.querySelector('#form-submit');
-        
-        this.searchidInput = document.querySelector('#searchid');
-        this.searchidSubmit = document.querySelector('#searchid-submit');
-   
-        this.searchapartmentInput = document.querySelector('#searchapartment');
-        this.searchapartmentSubmit = document.querySelector('#searchapartment-submit');
-        
-        this.searchpincodeInput = document.querySelector('#searchpincode');
-        this.searchpincodeSubmit = document.querySelector('#searchpincode-submit');
-        
-        this.showAllSubmit = document.querySelector('#show-all');
-
-        this.deactivateSelect = document.querySelector('#buildingtype');
-        this.deactivateInput = document.getElementsByTagName("INPUT")[3];
-
-        this.form = document.getElementById("form");
-        this.form2 = document.getElementById("form2");
-        this.form3 = document.getElementById("form3");
-        this.form4 = document.getElementById("form4");
+          
+        if(this.form.elements[j].disabled)
+        {
+            continue;
+        }
+                
+        if(!this.validFormCheck(this.form.elements[j].value)){
+            return false;
+        }       
     }
+    return true;
+
+}
+
 }
 
 
@@ -249,9 +260,13 @@ let viewObj = new View()
 let Dobj = new Directory(viewObj);
 
 
+viewObj.formButton.addEventListener('click', () => {
+    if(viewObj.validateForm()){
+        Dobj.storeAddress()
+    }
+});
 
 
-viewObj.formButton.addEventListener('click', Dobj.storeAddress);
 viewObj.searchidSubmit.addEventListener('click', Dobj.fetchAddById);
 viewObj.searchapartmentSubmit.addEventListener('click', Dobj.fetchAddByApp);
 viewObj.searchpincodeSubmit.addEventListener('click', Dobj.fetchAddByPin);
@@ -285,7 +300,7 @@ function callIt()
  
     }
     
-    Dobj.displayFIlterData(objArr);
+    viewObj.displayFIlterData(objArr);
   
 }
 window.onload= callIt;
