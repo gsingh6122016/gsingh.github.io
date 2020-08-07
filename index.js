@@ -199,7 +199,11 @@ class View {
             myArticle.appendChild(streetname);
             myArticle.appendChild(houseno);
             myArticle.appendChild(buildingtype);
-            myArticle.appendChild(aprtname);
+            if(objectDataArr[i].aprtName != "")
+            {
+                myArticle.appendChild(aprtname);
+            }
+            
             myArticle.appendChild(cityname);
             myArticle.appendChild(state);
             myArticle.appendChild(pincode);
