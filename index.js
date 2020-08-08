@@ -42,10 +42,7 @@ class Directory {
     
 
  fetchAddById = () => {
-
-  
     var objectDataArr = [];
-  
 
     for(let i=0; i<this.objArr.length; i++) {
         
@@ -53,24 +50,20 @@ class Directory {
            objectDataArr.push(this.objArr[i]);
           return objectDataArr;
        }
-
    }   
    return objectDataArr;
 }
 
 
 
- fetchAddByApp = () => {
-  
+ fetchAddByApp = () => {  
     let newArr = [];
-
 
     for(let i=0; i<this.objArr.length; i++) {
        if (this.objArr[i].aprtName === this.viewObj.searchapartmentInput.value
         && this.viewObj.searchapartmentInput.value != "") {
            newArr.push(this.objArr[i]);
        }
-
    }     
    return newArr;
 }
@@ -105,44 +98,36 @@ deactivateHandler = () => {
 
 
  storeAddress = () => {
-   let i= Math.floor(localStorage.length/9 ) ;
-        localStorage.setItem("ID"+i,Date.now().toString() + Math.floor((Math.random() * 100) + 1) );
-        localStorage.setItem("Name"+i, this.viewObj.nameInput.value);
-        localStorage.setItem("Street Name"+i,this.viewObj.streetnameInput.value );
-        localStorage.setItem("House Number"+i,this.viewObj.housenoInput.value );
-        localStorage.setItem("Building Type"+i,this.viewObj.buildingtypeInput.value );
-        localStorage.setItem("Apartment Name"+i,this.viewObj.aprtnameInput.value );
-        localStorage.setItem("City Name"+i,this.viewObj.citynameInput.value );
-        localStorage.setItem("State"+i,this.viewObj.stateInput.value );
-        localStorage.setItem("pincode"+i,this.viewObj.pincodeInput.value );
-    
+
+let i= Math.floor(localStorage.length ) ;
+
+        let newObj = new Address();
+        newObj.setAddressValue(Date.now().toString() + Math.floor((Math.random() * 100) + 1),
+                                 this.viewObj.nameInput.value,
+                                 this.viewObj.streetnameInput.value,
+                                 this.viewObj.housenoInput.value,
+                                 this.viewObj.buildingtypeInput.value,
+                                 this.viewObj.aprtnameInput.value,
+                                 this.viewObj.citynameInput.value,
+                                 this.viewObj.stateInput.value,
+                                 this.viewObj.pincodeInput.value
+                            );
+        localStorage.setItem("OBJ"+i, JSON.stringify(newObj));
+
                 }
 
 
-loadAddressValue(i, newObj) {
+loadAddressValue() {
    
-        newObj.setAddressValue( 
-        localStorage.getItem("ID"+i),
-        localStorage.getItem("Name"+i),
-        localStorage.getItem("Street Name"+i),
-        localStorage.getItem("House Number"+i),
-        localStorage.getItem("Building Type"+i),
-        localStorage.getItem("Apartment Name"+i), 
-        localStorage.getItem("City Name"+i), 
-        localStorage.getItem("State"+i),
-        localStorage.getItem("pincode"+i)
-    
-        );
-           
-        Dobj.objArr.push(newObj);
-    
-        
+             for(let i=0; i<localStorage.length; i++ ){
+           let newObj =JSON.parse(localStorage.getItem("OBJ"+i)) ;
+                    Dobj.objArr.push(newObj);
+     
+        }
         
         }
 
 }
-
-
 
 
 
@@ -282,10 +267,8 @@ let Dobj = new Directory(viewObj);
 
 
 window.onload= () => {
-    for(let i=0; i<localStorage.length/9; i++ ){
-        let addObj = new Address();
-         Dobj.loadAddressValue(i, addObj); 
-    }
+    
+    Dobj.loadAddressValue(); 
     viewObj.displayFIlterData(Dobj.objArr);
 };
 
