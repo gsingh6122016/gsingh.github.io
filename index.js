@@ -1,6 +1,3 @@
-let objArr = [];
-
-
 
 class Address {
     constructor() {
@@ -27,6 +24,8 @@ class Address {
         this.state = state;
         this.pincode = pincode;     
     }
+
+  
 }
 
 
@@ -34,11 +33,13 @@ class Address {
 
 
 class Directory {
+
     constructor(viewObj) {
         this.viewObj=viewObj;
+        this.objArr = [];
     }
 
-  
+    
 
  fetchAddById = () => {
 
@@ -46,10 +47,10 @@ class Directory {
     var objectDataArr = [];
   
 
-    for(let i=0; i<objArr.length; i++) {
+    for(let i=0; i<this.objArr.length; i++) {
         
-       if (objArr[i].id == this.viewObj.searchidInput.value ) {
-           objectDataArr.push(objArr[i]);
+       if (this.objArr[i].id == this.viewObj.searchidInput.value ) {
+           objectDataArr.push(this.objArr[i]);
           return objectDataArr;
        }
 
@@ -64,10 +65,10 @@ class Directory {
     let newArr = [];
 
 
-    for(let i=0; i<objArr.length; i++) {
-       if (objArr[i].aprtName === this.viewObj.searchapartmentInput.value
+    for(let i=0; i<this.objArr.length; i++) {
+       if (this.objArr[i].aprtName === this.viewObj.searchapartmentInput.value
         && this.viewObj.searchapartmentInput.value != "") {
-           newArr.push(objArr[i]);
+           newArr.push(this.objArr[i]);
        }
 
    }     
@@ -79,9 +80,9 @@ class Directory {
  fetchAddByPin = () => {
 
     let newArr = [];
-    for(let i=0; i<objArr.length; i++) {
-       if (objArr[i].pincode === this.viewObj.searchpincodeInput.value) {
-           newArr.push(objArr[i]);
+    for(let i=0; i<this.objArr.length; i++) {
+       if (this.objArr[i].pincode === this.viewObj.searchpincodeInput.value) {
+           newArr.push(this.objArr[i]);
        }
 
    }   
@@ -116,6 +117,28 @@ deactivateHandler = () => {
         localStorage.setItem("pincode"+i,this.viewObj.pincodeInput.value );
     
                 }
+
+
+loadAddressValue(i, newObj) {
+   
+        newObj.setAddressValue( 
+        localStorage.getItem("ID"+i),
+        localStorage.getItem("Name"+i),
+        localStorage.getItem("Street Name"+i),
+        localStorage.getItem("House Number"+i),
+        localStorage.getItem("Building Type"+i),
+        localStorage.getItem("Apartment Name"+i), 
+        localStorage.getItem("City Name"+i), 
+        localStorage.getItem("State"+i),
+        localStorage.getItem("pincode"+i)
+    
+        );
+           
+        Dobj.objArr.push(newObj);
+    
+        
+        
+        }
 
 }
 
@@ -213,9 +236,7 @@ class View {
 }
 
 
-showAll = () => {
-    this.displayFIlterData(objArr);
-}
+
 
 
 validFormCheck (x) {
@@ -248,6 +269,9 @@ validateForm(form) {
 
 }
 
+showAll = () => {
+    this.displayFIlterData(Dobj.objArr);
+}
 
 }
 
@@ -255,6 +279,16 @@ validateForm(form) {
 let viewObj = new View()
 
 let Dobj = new Directory(viewObj);
+
+
+window.onload= () => {
+    for(let i=0; i<localStorage.length/9; i++ ){
+        let addObj = new Address();
+         Dobj.loadAddressValue(i, addObj); 
+    }
+    viewObj.displayFIlterData(Dobj.objArr);
+};
+
 
 
 viewObj.formButton.addEventListener('click', () => {
@@ -287,37 +321,10 @@ viewObj.searchpincodeSubmit.addEventListener('click', () => {
 
 
 viewObj.showAllSubmit.addEventListener('click', viewObj.showAll);
+
 viewObj.deactivateSelect.addEventListener('change', Dobj.deactivateHandler);
 
 
 
 
-
-//This function exicutes whenever page refreshes.
-function callIt()
-{
-    for(let i=0; i<localStorage.length/9; i++ ){
-        
-      let addObj = new Address();
-      addObj.setAddressValue( 
-      localStorage.getItem("ID"+i),
-      localStorage.getItem("Name"+i),
-      localStorage.getItem("Street Name"+i),
-      localStorage.getItem("House Number"+i),
-      localStorage.getItem("Building Type"+i),
-      localStorage.getItem("Apartment Name"+i), 
-      localStorage.getItem("City Name"+i), 
-      localStorage.getItem("State"+i),
-      localStorage.getItem("pincode"+i)
- 
-      );
-       
-     objArr.push(addObj);
- 
-    }
-    
-    viewObj.displayFIlterData(objArr);
-  
-}
-window.onload= callIt;
 
