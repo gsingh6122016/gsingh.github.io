@@ -121,7 +121,7 @@ loadAddressValue() {
    
              for(let i=0; i<localStorage.length; i++ ){
            let newObj =JSON.parse(localStorage.getItem("OBJ"+i)) ;
-                    Dobj.objArr.push(newObj);
+                    this.objArr.push(newObj);
      
         }
         
