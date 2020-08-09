@@ -34,19 +34,18 @@ class Address {
 
 class Directory {
 
-    constructor(viewObj) {
-        this.viewObj=viewObj;
-        this.objArr = [];
+    constructor() {
+             this.objArr = [];
     }
 
     
 
- fetchAddById = () => {
+ fetchAddById = (obj) => {
     var objectDataArr = [];
 
     for(let i=0; i<this.objArr.length; i++) {
         
-       if (this.objArr[i].id == this.viewObj.searchidInput.value ) {
+       if (this.objArr[i].id == obj.searchidInput.value ) {
            objectDataArr.push(this.objArr[i]);
           return objectDataArr;
        }
@@ -56,11 +55,11 @@ class Directory {
 
 
 
- fetchAddByApp = () => {  
+ fetchAddByApp = (obj) => {  
     let newArr = [];
 
     for(let i=0; i<this.objArr.length; i++) {
-       if (this.objArr[i].aprtName === this.viewObj.searchapartmentInput.value
+       if (this.objArr[i].aprtName === obj.searchapartmentInput.value
         && this.viewObj.searchapartmentInput.value != "") {
            newArr.push(this.objArr[i]);
        }
@@ -70,11 +69,11 @@ class Directory {
 
 
 
- fetchAddByPin = () => {
+ fetchAddByPin = (obj) => {
 
     let newArr = [];
     for(let i=0; i<this.objArr.length; i++) {
-       if (this.objArr[i].pincode === this.viewObj.searchpincodeInput.value) {
+       if (this.objArr[i].pincode === obj.searchpincodeInput.value) {
            newArr.push(this.objArr[i]);
        }
 
@@ -84,33 +83,33 @@ class Directory {
 
 
 
-deactivateHandler = () => {
+deactivateHandler = (obj) => {
 
     if (event.target.value === "standalone") {     
-     this.viewObj.deactivateInput.setAttribute("disabled", "true");
+     obj.deactivateInput.setAttribute("disabled", "true");
     }
     else {
-          this.viewObj.deactivateInput.removeAttribute("disabled");
+          obj.deactivateInput.removeAttribute("disabled");
     }
      
  }
  
 
 
- storeAddress = () => {
+ storeAddress = (newObj, viewObj) => {
 
 let i= Math.floor(localStorage.length ) ;
 
-        let newObj = new Address();
+        
         newObj.setAddressValue(Date.now().toString() + Math.floor((Math.random() * 100) + 1),
-                                 this.viewObj.nameInput.value,
-                                 this.viewObj.streetnameInput.value,
-                                 this.viewObj.housenoInput.value,
-                                 this.viewObj.buildingtypeInput.value,
-                                 this.viewObj.aprtnameInput.value,
-                                 this.viewObj.citynameInput.value,
-                                 this.viewObj.stateInput.value,
-                                 this.viewObj.pincodeInput.value
+                                 viewObj.nameInput.value,
+                                 viewObj.streetnameInput.value,
+                                 viewObj.housenoInput.value,
+                                 viewObj.buildingtypeInput.value,
+                                 viewObj.aprtnameInput.value,
+                                 viewObj.citynameInput.value,
+                                 viewObj.stateInput.value,
+                                 viewObj.pincodeInput.value
                             );
         localStorage.setItem("OBJ"+i, JSON.stringify(newObj));
 
@@ -254,8 +253,8 @@ validateForm(form) {
 
 }
 
-showAll = () => {
-    this.displayFIlterData(Dobj.objArr);
+showAll = (objArr) => {
+    this.displayFIlterData(objArr);
 }
 
 }
@@ -263,7 +262,8 @@ showAll = () => {
 
 let viewObj = new View()
 
-let Dobj = new Directory(viewObj);
+let Dobj = new Directory();
+
 
 
 window.onload= () => {
@@ -275,37 +275,42 @@ window.onload= () => {
 
 
 viewObj.formButton.addEventListener('click', () => {
+    let addObj = new Address();
     if(viewObj.validateForm(viewObj.form)){
-        Dobj.storeAddress();
+        Dobj.storeAddress(addObj, viewObj);
         location.reload(); 
     }
 });
 
 viewObj.searchidSubmit.addEventListener('click', () => {
     if(viewObj.validateForm(viewObj.form2)){
-        viewObj.displayFIlterData(Dobj.fetchAddById());
+        viewObj.displayFIlterData(Dobj.fetchAddById(viewObj));
         
     }
 });
 
 viewObj.searchapartmentSubmit.addEventListener('click', () => {
     if(viewObj.validateForm(viewObj.form3)){
-        viewObj.displayFIlterData(Dobj.fetchAddByApp());
+        viewObj.displayFIlterData(Dobj.fetchAddByApp(viewObj));
     
     }
 });
 
 viewObj.searchpincodeSubmit.addEventListener('click', () => {
     if(viewObj.validateForm(viewObj.form4)){
-        viewObj.displayFIlterData( Dobj.fetchAddByPin());
+        viewObj.displayFIlterData( Dobj.fetchAddByPin(viewObj));
        
     }
 });
 
 
-viewObj.showAllSubmit.addEventListener('click', viewObj.showAll);
+viewObj.showAllSubmit.addEventListener('click', () => {
+    viewObj.showAll(Dobj.objArr);
+} );
 
-viewObj.deactivateSelect.addEventListener('change', Dobj.deactivateHandler);
+viewObj.deactivateSelect.addEventListener('change',() => {
+    Dobj.deactivateHandler(viewObj);
+} );
 
 
 
