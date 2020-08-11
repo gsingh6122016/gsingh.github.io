@@ -60,7 +60,7 @@ class Directory {
 
     for(let i=0; i<this.objArr.length; i++) {
        if (this.objArr[i].aprtName === obj.searchapartmentInput.value
-        && this.viewObj.searchapartmentInput.value != "") {
+        && obj.searchapartmentInput.value != "") {
            newArr.push(this.objArr[i]);
        }
    }     
@@ -134,7 +134,10 @@ loadAddressValue() {
 
 
 class View {
-    constructor() {
+    constructor(Dobj) {
+
+        this.Dobj = Dobj;
+
         this.nameInput = document.querySelector('#name');
         this.housenoInput = document.querySelector('#houseno');
         this.streetnameInput = document.querySelector('#streetname');
@@ -170,7 +173,7 @@ class View {
   displayFIlterData(objectDataArr) {
     const mySection = document.querySelector('section');
       mySection.innerHTML = "";
-
+ 
       if(objectDataArr.length === 0){
         const h2 = document.createElement('h2');
         h2.textContent = "No Data Found ,try to add something"
@@ -253,65 +256,72 @@ validateForm(form) {
 
 }
 
-showAll = (objArr) => {
-    this.displayFIlterData(objArr);
+showAll = () => {
+    this.displayFIlterData(this.Dobj.objArr);
+}
+
+store = (addObj) => {
+    if(this.validateForm(this.form)){
+        this.Dobj.storeAddress(addObj, this);
+        location.reload(); 
+    }
+}
+
+searchId = () => {
+    if(this.validateForm(this.form2)){
+        this.displayFIlterData(this.Dobj.fetchAddById(this));
+        
+    }
+}
+
+searchAprt = () => {
+    if(this.validateForm(this.form3)){
+        this.displayFIlterData(this.Dobj.fetchAddByApp(this));
+    
+    }
+}
+
+searchPin = () => {
+    if(this.validateForm(this.form4)){
+        this.displayFIlterData( this.Dobj.fetchAddByPin(this));
+       
+    }
+}
+
+deactivate = () => {
+    this.Dobj.deactivateHandler(this);
 }
 
 }
 
 
-let viewObj = new View()
+
 
 let Dobj = new Directory();
-
-
-
-window.onload= () => {
-    
-    Dobj.loadAddressValue(); 
-    viewObj.displayFIlterData(Dobj.objArr);
-};
+let viewObj = new View(Dobj);
 
 
 
 viewObj.formButton.addEventListener('click', () => {
     let addObj = new Address();
-    if(viewObj.validateForm(viewObj.form)){
-        Dobj.storeAddress(addObj, viewObj);
-        location.reload(); 
-    }
+    viewObj.store(addObj); 
 });
 
-viewObj.searchidSubmit.addEventListener('click', () => {
-    if(viewObj.validateForm(viewObj.form2)){
-        viewObj.displayFIlterData(Dobj.fetchAddById(viewObj));
-        
-    }
-});
+viewObj.searchidSubmit.addEventListener('click', viewObj.searchId);
 
-viewObj.searchapartmentSubmit.addEventListener('click', () => {
-    if(viewObj.validateForm(viewObj.form3)){
-        viewObj.displayFIlterData(Dobj.fetchAddByApp(viewObj));
-    
-    }
-});
+viewObj.searchapartmentSubmit.addEventListener('click', viewObj.searchAprt);
 
-viewObj.searchpincodeSubmit.addEventListener('click', () => {
-    if(viewObj.validateForm(viewObj.form4)){
-        viewObj.displayFIlterData( Dobj.fetchAddByPin(viewObj));
-       
-    }
-});
+viewObj.searchpincodeSubmit.addEventListener('click', viewObj.searchPin);
 
 
-viewObj.showAllSubmit.addEventListener('click', () => {
-    viewObj.showAll(Dobj.objArr);
-} );
+viewObj.showAllSubmit.addEventListener('click', viewObj.showAll );
 
-viewObj.deactivateSelect.addEventListener('change',() => {
-    Dobj.deactivateHandler(viewObj);
-} );
+viewObj.deactivateSelect.addEventListener('change',viewObj.deactivate );
 
+window.onload= () => {   
+    Dobj.loadAddressValue(); 
+    viewObj.displayFIlterData(Dobj.objArr);
+};
 
 
 
